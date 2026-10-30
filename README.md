@@ -70,8 +70,8 @@ python tests/smoke_test_coveo.py
 ## Results
 
 Aggregate Exp4 test results (Macro-F1 mean ± s.d. over seeds, per-class F1, paired bootstrap tables,
-prefix-length bins) are in `results/exp4/summary.md` and `results/exp4/results.json`. Exp4 stage 3c and
-Exp5 are pending.
+prefix-length bins) are in `results/exp4/summary.md` and `results/exp4/results.json`. Exp5 (Coveo) is
+pending.
 
 ## How to cite
 
