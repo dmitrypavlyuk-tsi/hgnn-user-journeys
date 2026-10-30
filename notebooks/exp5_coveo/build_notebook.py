@@ -64,7 +64,8 @@ NEURAL_MODELS = [
     "SASRec+Time+SF+PageItem",
 ]
 LR_GRID = [1e-3, 3e-4, 1e-4]           # optional stage 5: learning rate chosen on validation (seed SEEDS[0])
-LR_MODELS = NEURAL_MODELS
+LR_MODELS = NEURAL_MODELS             # all 5 neural models
+LR_SEEDS = [42, 123, 456, 789, 1011]   # 5 seeds at the chosen learning rate (789/1011 are new runs)
 LGBM_TRIALS = 30
 LGBM_TUNE_FRAC = 1.0                  # use 0.5 on a 2-vCPU T4 runtime
 LGBM_TUNE_TIMEOUT_SEC = 3 * 3600
@@ -198,7 +199,7 @@ LR_ROOT = os.path.join(DRIVE_DIR, "lr_selection")
 RESULTS_LR_DIR = os.path.join(DRIVE_DIR, "results_lr")
 t_stage = time.time()
 choice = train.lr_selection(D, LR_MODELS, RUN_DIR, LR_ROOT, DEVICE, lrs=LR_GRID,
-                            select_seed=SEEDS[0], seeds=SEEDS, log=log)
+                            select_seed=SEEDS[0], seeds=LR_SEEDS, log=log)
 log(f"Stage 5 training finished ({(time.time() - t_stage) / 3600:.1f} h in this session)")
 print(json.dumps(choice, indent=2))
 out_lr, md_lr = evaluate.evaluate_all(D, os.path.join(LR_ROOT, "final"), RESULTS_LR_DIR, n_boot=N_BOOT,

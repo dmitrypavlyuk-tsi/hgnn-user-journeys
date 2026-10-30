@@ -37,7 +37,7 @@ again and continue from the stage you were in.
 High-RAM is recommended but not required."""))
 
 cells.append(md("## Configuration"))
-cells.append(code("""NOTEBOOK_VERSION = "2026-10-30.6"   # must match exp4lib.__version__ printed after the library cells
+cells.append(code("""NOTEBOOK_VERSION = "2026-10-30.7"   # must match exp4lib.__version__ printed after the library cells
 print("Exp4 notebook version:", NOTEBOOK_VERSION)
 
 # ---- edit these -------------------------------------------------------------
@@ -69,7 +69,8 @@ STAGE_3C_MODELS = [                   # optional stage 3c: homogeneous graph wit
 ]
 STAGE_3C_SEEDS = SEEDS[:3]
 LR_GRID = [1e-3, 3e-4, 1e-4]           # optional stage 5: learning rate chosen on validation (seed SEEDS[0])
-LR_MODELS = NEURAL_MODELS + STAGE_3B_MODELS + STAGE_3C_MODELS
+LR_MODELS = NEURAL_MODELS + STAGE_3B_MODELS + STAGE_3C_MODELS   # all 13 neural models
+LR_SEEDS = SEEDS                       # seeds trained at the chosen learning rate
 RUN_LEAKY_REFERENCE = True            # also train HGNN_full on the original (leaky) Exp3 item join
 LEAKY_REFERENCE_SEEDS = SEEDS[:3]
 
@@ -284,7 +285,7 @@ LR_ROOT = os.path.join(DRIVE_DIR, "lr_selection")
 RESULTS_LR_DIR = os.path.join(DRIVE_DIR, "results_lr")
 t_stage = time.time()
 choice = train.lr_selection(D, LR_MODELS, RUN_DIR, LR_ROOT, DEVICE, lrs=LR_GRID,
-                            select_seed=SEEDS[0], seeds=SEEDS, log=log)
+                            select_seed=SEEDS[0], seeds=LR_SEEDS, log=log)
 log(f"Stage 5 training finished ({(time.time() - t_stage) / 3600:.1f} h in this session)")
 print(json.dumps(choice, indent=2))
 out_lr, md_lr = evaluate.evaluate_all(D, os.path.join(LR_ROOT, "final"), RESULTS_LR_DIR, n_boot=N_BOOT,
