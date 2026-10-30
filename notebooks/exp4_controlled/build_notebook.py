@@ -37,7 +37,7 @@ again and continue from the stage you were in.
 High-RAM is recommended but not required."""))
 
 cells.append(md("## Configuration"))
-cells.append(code("""NOTEBOOK_VERSION = "2026-10-30.5"   # must match exp4lib.__version__ printed after the library cells
+cells.append(code("""NOTEBOOK_VERSION = "2026-10-30.6"   # must match exp4lib.__version__ printed after the library cells
 print("Exp4 notebook version:", NOTEBOOK_VERSION)
 
 # ---- edit these -------------------------------------------------------------
@@ -68,6 +68,8 @@ STAGE_3C_MODELS = [                   # optional stage 3c: homogeneous graph wit
     "HomoGraphSAGE_meanpool",
 ]
 STAGE_3C_SEEDS = SEEDS[:3]
+LR_GRID = [1e-3, 3e-4, 1e-4]           # optional stage 5: learning rate chosen on validation (seed SEEDS[0])
+LR_MODELS = NEURAL_MODELS + STAGE_3B_MODELS + STAGE_3C_MODELS
 RUN_LEAKY_REFERENCE = True            # also train HGNN_full on the original (leaky) Exp3 item join
 LEAKY_REFERENCE_SEEDS = SEEDS[:3]
 
@@ -268,6 +270,30 @@ cells.append(code("""if "D" not in globals():
 out, md_text = evaluate.evaluate_all(D, RUN_DIR, RESULTS_DIR, n_boot=N_BOOT, log=log)
 from IPython.display import Markdown, display
 display(Markdown(md_text))"""))
+
+cells.append(md("""## Stage 5 (optional): learning-rate selection
+
+Robustness check of the training protocol. For each neural model, the learning rate is chosen from
+`LR_GRID` on **validation** Macro-F1 with seed 42, then all seeds are trained at the chosen rate. Patience,
+batch size, epochs, class weights and data are unchanged. Existing runs are reused: the default rate (1e-3)
+comes from stage 3, so only the lower rates are trained. Results are written separately
+(`lr_selection/final/`, `results_lr/`); the stage 4 results stay untouched. Resumable like every other stage."""))
+cells.append(code("""if "D" not in globals():
+    D = data.Exp4Data(PREP_DIR)
+LR_ROOT = os.path.join(DRIVE_DIR, "lr_selection")
+RESULTS_LR_DIR = os.path.join(DRIVE_DIR, "results_lr")
+t_stage = time.time()
+choice = train.lr_selection(D, LR_MODELS, RUN_DIR, LR_ROOT, DEVICE, lrs=LR_GRID,
+                            select_seed=SEEDS[0], seeds=SEEDS, log=log)
+log(f"Stage 5 training finished ({(time.time() - t_stage) / 3600:.1f} h in this session)")
+print(json.dumps(choice, indent=2))
+out_lr, md_lr = evaluate.evaluate_all(D, os.path.join(LR_ROOT, "final"), RESULTS_LR_DIR, n_boot=N_BOOT,
+                                      title=f"Controlled comparison ({D.meta.get('dataset', 'GA4')}), "
+                                            "learning rate selected on validation: test results", log=log)
+with open(os.path.join(RESULTS_LR_DIR, "lr_choice.json"), "w") as f:
+    json.dump(choice, f, indent=2)
+from IPython.display import Markdown, display
+display(Markdown(md_lr))"""))
 
 nb = nbf.v4.new_notebook()
 nb["cells"] = cells

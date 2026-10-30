@@ -49,7 +49,7 @@ def load_runs(run_dir):
 
 
 def evaluate_all(D, run_dir, out_dir, n_boot=1000, boot_seed=2026, reference=REFERENCE,
-                 extra_references=SECOND_REFERENCES, log=print):
+                 extra_references=SECOND_REFERENCES, title=None, log=print):
     os.makedirs(out_dir, exist_ok=True)
     runs = load_runs(run_dir)
     if not runs:
@@ -147,7 +147,9 @@ def evaluate_all(D, run_dir, out_dir, n_boot=1000, boot_seed=2026, reference=REF
     for model, r in results.items():
         r["macro_f1_ci95_rep_seed"] = ci(boot[(model, r["representative_seed"])])
 
-    out = {"reference_model": reference, "n_boot": n_boot, "n_test_sessions": int(S),
+    dataset = D.meta.get("dataset", "GA4 obfuscated e-commerce sample")
+    out = {"title": title or f"Controlled comparison ({dataset}): test results", "dataset": dataset,
+           "reference_model": reference, "n_boot": n_boot, "n_test_sessions": int(S),
            "n_test_prefixes": int(len(test)), "n_undetermined_test_prefixes": int(und.sum()),
            "models": results, "bootstrap_vs_reference": boot_table, "bootstrap_vs": boot_all,
            "leakage": D.meta.get("leakage"), "repro_all_pass": D.meta.get("repro_all_pass")}
@@ -174,7 +176,8 @@ def _fmt(a):
 def summary_markdown(out):
     res = out["models"]
     order = sorted(res, key=lambda m: -res[m]["macro_f1"]["mean"])
-    L = ["# Exp4 controlled comparison: test results", "",
+    L = [f"# {out.get('title', 'Controlled comparison: test results')}", "",
+         f"Dataset: {out.get('dataset', 'GA4 obfuscated e-commerce sample')}.", "",
          f"Test set: {out['n_test_prefixes']:,} prefixes from {out['n_test_sessions']:,} sessions. "
          f"Mean ± std over seeds. Bootstrap: {out['n_boot']} resamples of test sessions, "
          f"deltas vs `{out['reference_model']}`.", "",

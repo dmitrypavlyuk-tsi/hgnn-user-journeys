@@ -8,6 +8,7 @@ For every (model, seed) the following files live in <run_dir>:
 import json
 import os
 import random
+import shutil
 import time
 
 import numpy as np
@@ -82,10 +83,11 @@ def _atomic_save(obj, path):
     os.replace(tmp, path)
 
 
-def train_one(D, model_name, seed, run_dir, device, log=print, max_train_rows=None):
-    """Train one (model, seed). Resumes from the epoch checkpoint if present."""
+def train_one(D, model_name, seed, run_dir, device, log=print, max_train_rows=None, lr=None):
+    """Train one (model, seed). Resumes from the epoch checkpoint if present.
+    lr overrides the family learning rate (learning-rate selection stage)."""
     spec = MODEL_SPECS[model_name]
-    cfg = spec["train"]
+    cfg = dict(spec["train"], lr=lr) if lr is not None else spec["train"]
     build = spec["batch"]
     tag = run_tag(model_name, seed)
     for sub in ("ckpt", "preds", "runs"):
@@ -176,3 +178,78 @@ def train_one(D, model_name, seed, run_dir, device, log=print, max_train_rows=No
     log(f"[{tag}] done: best_epoch={state['best_epoch']} val={state['best_val']:.4f} "
         f"test={test_f1:.4f} ({state['elapsed'] / 60:.1f} min)")
     return info
+
+
+# --------------------------------------------------------------------------
+# Learning-rate selection
+# --------------------------------------------------------------------------
+LR_GRID = (1e-3, 3e-4, 1e-4)
+
+
+def _run_info(run_dir, model_name, seed):
+    with open(os.path.join(run_dir, "runs", run_tag(model_name, seed) + ".json")) as f:
+        return json.load(f)
+
+
+def _copy_run(src_dir, dst_dir, tag):
+    for sub, ext in (("runs", ".json"), ("preds", ".parquet")):
+        os.makedirs(os.path.join(dst_dir, sub), exist_ok=True)
+        shutil.copy2(os.path.join(src_dir, sub, tag + ext), os.path.join(dst_dir, sub, tag + ext))
+
+
+def lr_selection(D, models, base_run_dir, lr_root, device, lrs=LR_GRID, select_seed=42,
+                 seeds=(42, 123, 456), copy_prefixes=("Markov-", "LightGBM__"), log=print):
+    """Choose each neural model's learning rate on validation Macro-F1 (one seed), then
+    train all seeds at the chosen rate. Everything else (patience, batch size, epochs,
+    class weights) is unchanged.
+
+    Layout under lr_root:
+      search/lr<value>/   select_seed runs for every learning rate
+      final/              all seeds at the chosen rate (+ copied non-neural baselines)
+      lr_choice.json      validation scores and the chosen rate per model
+    Runs that already exist are reused: the family default rate for select_seed and
+    for all seeds comes from base_run_dir, so lr=1e-3 is never retrained.
+    """
+    search_root = os.path.join(lr_root, "search")
+    final_dir = os.path.join(lr_root, "final")
+    choice_path = os.path.join(lr_root, "lr_choice.json")
+    os.makedirs(final_dir, exist_ok=True)
+    choice = json.load(open(choice_path)) if os.path.exists(choice_path) else {}
+
+    for model in models:
+        default_lr = MODEL_SPECS[model]["train"]["lr"]
+
+        def run_dir_for(lr_value):
+            if abs(lr_value - default_lr) < 1e-12:
+                return base_run_dir
+            return os.path.join(search_root, f"lr{lr_value:g}")
+
+        scores = {}
+        for lr_value in lrs:
+            d = run_dir_for(lr_value)
+            if not is_done(d, model, select_seed):
+                log(f"[lr-search] {model} lr={lr_value:g} seed={select_seed}")
+                train_one(D, model, select_seed, d, device, log=log, lr=lr_value)
+            scores[f"{lr_value:g}"] = _run_info(d, model, select_seed)["best_val_macro_f1"]
+        best = max(lrs, key=lambda v: scores[f"{v:g}"])  # first best in grid order
+        choice[model] = {"val_macro_f1_by_lr": scores, "chosen_lr": best, "select_seed": select_seed}
+        with open(choice_path, "w") as f:
+            json.dump(choice, f, indent=2)
+        log(f"[lr-search] {model}: {scores} -> lr={best:g}")
+
+        src = run_dir_for(best)
+        for seed in seeds:
+            tag = run_tag(model, seed)
+            if is_done(final_dir, model, seed):
+                continue
+            if is_done(src, model, seed):
+                _copy_run(src, final_dir, tag)
+            else:
+                train_one(D, model, seed, final_dir, device, log=log, lr=best)
+
+    for fn in sorted(os.listdir(os.path.join(base_run_dir, "runs"))):
+        if fn.startswith(copy_prefixes) and fn.endswith(".json") and "__seed" in fn:
+            tag = fn[:-5]
+            if not os.path.exists(os.path.join(final_dir, "runs", fn)):
+                _copy_run(base_run_dir, final_dir, tag)
+    return choice
