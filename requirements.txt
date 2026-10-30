@@ -1,0 +1,19 @@
+# Versions tested locally for the CPU smoke tests (Python 3.12).
+# In Colab, torch comes preinstalled; the notebooks install torch_geometric, optuna, lightgbm and duckdb.
+torch==2.15.0
+torch-geometric==2.8.1
+lightgbm==4.7.0
+optuna==5.0.0
+pandas==3.1.0
+numpy==2.5.4
+pyarrow==26.0.0
+scikit-learn==1.9.1
+duckdb==2.0.0
+psutil==7.2.2
+# notebook generation and figures
+nbformat==5.11.1
+matplotlib==3.11.2
+pypandoc_binary==1.17
+# Exp4 stage 1 (BigQuery), used in Colab only
+google-cloud-bigquery
+db-dtypes

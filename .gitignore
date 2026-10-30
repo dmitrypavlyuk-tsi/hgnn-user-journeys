@@ -1,0 +1,36 @@
+# Data (never commit; Coveo data may not be redistributed)
+data/
+raw/
+prepared/
+*.zip
+*.csv
+*.parquet
+!results/**/*.parquet.keep
+
+# Model checkpoints and training artifacts
+*.pt
+*.pth
+*.ckpt
+ckpt/
+runs/
+log.txt
+
+# Local test output and caches
+tests/_tmp*/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv*/
+venv/
+.DS_Store
+Thumbs.db
+
+# Office lock / temp files
+~$*
+*.tmp
+
+# Local archive of the original thesis repository clone (it is its own git repo)
+archive/
+
+# Manuscript draft: kept locally, not published until after peer review
+paper/
