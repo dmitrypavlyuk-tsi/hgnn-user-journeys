@@ -1,0 +1,218 @@
+{
+  "T_MAX": 43,
+  "LABEL_MAP": {
+    "Browser": 0,
+    "Researcher": 1,
+    "Intent": 2,
+    "Buyer": 3
+  },
+  "CLASS_ORDER": [
+    "Browser",
+    "Researcher",
+    "Intent",
+    "Buyer"
+  ],
+  "split_boundaries": {
+    "p70": 1609831172169203,
+    "p85": 1610937419041570
+  },
+  "dt_stats": {
+    "dt_mean_us": 34454845.985385105,
+    "dt_std_us": 468344652.33483434,
+    "MAX_DT_sec": 926.0326582799968
+  },
+  "price_stats": {
+    "price_mean": 26.55988937788465,
+    "price_std": 21.371268411482063
+  },
+  "vocab_sizes": {
+    "event": 11,
+    "page": 1899,
+    "item": 1162
+  },
+  "event_vocab": {
+    "add_payment_info": 2,
+    "add_shipping_info": 3,
+    "add_to_cart": 4,
+    "begin_checkout": 5,
+    "page_view": 6,
+    "purchase": 7,
+    "view_item": 8,
+    "view_item_list": 9,
+    "view_search_results": 10,
+    "<PAD>": 0,
+    "<UNK>": 1
+  },
+  "cat_vocab_sizes": {
+    "device_category": 3,
+    "traffic_source": 5,
+    "traffic_medium": 6,
+    "traffic_campaign": 5,
+    "country": 109,
+    "region": 367
+  },
+  "repro_report": [
+    {
+      "check": "events_base_rows",
+      "got": 1899352,
+      "expected": 1899352,
+      "ok": true
+    },
+    {
+      "check": "items_base_rows",
+      "got": 3431675,
+      "expected": 3431675,
+      "ok": true
+    },
+    {
+      "check": "select_item_rows",
+      "got": 31007,
+      "expected": 31007,
+      "ok": true
+    },
+    {
+      "check": "sessions_before_tmax",
+      "got": 334037,
+      "expected": 334037,
+      "ok": true
+    },
+    {
+      "check": "sessions",
+      "got": 327283,
+      "expected": 327283,
+      "ok": true
+    },
+    {
+      "check": "session_labels",
+      "got": {
+        "Browser": 293699,
+        "Researcher": 19048,
+        "Intent": 12241,
+        "Buyer": 2295
+      },
+      "expected": {
+        "Browser": 293699,
+        "Researcher": 19048,
+        "Intent": 12241,
+        "Buyer": 2295
+      },
+      "ok": true
+    },
+    {
+      "check": "sessions_by_split",
+      "got": {
+        "train": 229098,
+        "test": 49093,
+        "val": 49092
+      },
+      "expected": {
+        "train": 229098,
+        "val": 49092,
+        "test": 49093
+      },
+      "ok": true
+    },
+    {
+      "check": "prefixes",
+      "got": 1277287,
+      "expected": 1277287,
+      "ok": true
+    },
+    {
+      "check": "prefixes_by_split",
+      "got": {
+        "train": 875203,
+        "test": 211277,
+        "val": 190807
+      },
+      "expected": {
+        "train": 875203,
+        "val": 190807,
+        "test": 211277
+      },
+      "ok": true
+    },
+    {
+      "check": "test_prefixes_by_class",
+      "got": {
+        "Browser": 131685,
+        "Researcher": 39997,
+        "Intent": 29747,
+        "Buyer": 9848
+      },
+      "expected": {
+        "Browser": 131685,
+        "Buyer": 9848,
+        "Intent": 29747,
+        "Researcher": 39997
+      },
+      "ok": true
+    }
+  ],
+  "repro_all_pass": true,
+  "leakage": {
+    "events_sharing_timestamp_within_session": 0.1715,
+    "item_rows": 1930944,
+    "exp3_graph_edges": 2152822,
+    "fixed_graph_edges": 1930944,
+    "exp3_edges_not_from_own_event": 221878,
+    "exp3_edges_with_wrong_relation_type": 221878,
+    "prefixes_total": 1277287,
+    "unique_items_sees_future_items": {
+      "all": 27438,
+      "by_split": {
+        "train": 20462,
+        "val": 3409,
+        "test": 3567
+      },
+      "test_by_class": {
+        "Browser": 454,
+        "Researcher": 1004,
+        "Intent": 1752,
+        "Buyer": 357
+      }
+    },
+    "unique_items_value_differs": {
+      "all": 14421,
+      "by_split": {
+        "train": 10753,
+        "val": 1720,
+        "test": 1948
+      },
+      "test_by_class": {
+        "Browser": 452,
+        "Researcher": 782,
+        "Intent": 597,
+        "Buyer": 117
+      }
+    },
+    "graph_has_future_item_edges": {
+      "all": 10156,
+      "by_split": {
+        "train": 7215,
+        "val": 1500,
+        "test": 1441
+      },
+      "test_by_class": {
+        "Browser": 0,
+        "Researcher": 0,
+        "Intent": 1212,
+        "Buyer": 229
+      }
+    },
+    "graph_has_future_add_to_cart_or_purchase_items": {
+      "all": 0,
+      "by_split": {
+        "train": 0,
+        "val": 0,
+        "test": 0
+      },
+      "test_by_class": {
+        "Browser": 0,
+        "Researcher": 0,
+        "Intent": 0,
+        "Buyer": 0
+      }
+    }
+  }
+}
