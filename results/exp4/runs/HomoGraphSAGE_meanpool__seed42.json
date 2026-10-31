@@ -1,0 +1,90 @@
+{
+  "model": "HomoGraphSAGE_meanpool",
+  "seed": 42,
+  "best_epoch": 5,
+  "best_val_macro_f1": 0.6632933823244903,
+  "test_macro_f1": 0.6597026684225842,
+  "epochs_run": 12,
+  "runtime_sec": 269.1,
+  "n_params": 278852,
+  "train_config": {
+    "batch_size": 256,
+    "lr": 0.0001,
+    "max_epochs": 50,
+    "patience": 7
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9367504612315236,
+      "val_macro_f1": 0.6445815340638318,
+      "seconds": 22.3
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8311860693522175,
+      "val_macro_f1": 0.6358162431407282,
+      "seconds": 22.3
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.8022549398474137,
+      "val_macro_f1": 0.6614502984724401,
+      "seconds": 22.3
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.7827181491352219,
+      "val_macro_f1": 0.6573024375616506,
+      "seconds": 22.4
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.7676513689753336,
+      "val_macro_f1": 0.6632933823244903,
+      "seconds": 22.4
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.7550293767863029,
+      "val_macro_f1": 0.6579214758150452,
+      "seconds": 22.4
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.7453914945370124,
+      "val_macro_f1": 0.6551197931039534,
+      "seconds": 22.4
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.7346887417033331,
+      "val_macro_f1": 0.65888983669228,
+      "seconds": 22.4
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.7262951976711783,
+      "val_macro_f1": 0.6568223512424554,
+      "seconds": 22.6
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.7185728103685373,
+      "val_macro_f1": 0.6549065768450941,
+      "seconds": 22.6
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.7105487189903658,
+      "val_macro_f1": 0.6521354810348677,
+      "seconds": 22.3
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.7042623364293368,
+      "val_macro_f1": 0.6515029726175713,
+      "seconds": 22.3
+    }
+  ]
+}

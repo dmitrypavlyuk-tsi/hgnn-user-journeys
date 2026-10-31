@@ -1,0 +1,90 @@
+{
+  "model": "HGNN_full_meanpool",
+  "seed": 42,
+  "best_epoch": 5,
+  "best_val_macro_f1": 0.6570864938433404,
+  "test_macro_f1": 0.6609125354058236,
+  "epochs_run": 12,
+  "runtime_sec": 806.0,
+  "n_params": 410948,
+  "train_config": {
+    "batch_size": 256,
+    "lr": 0.0001,
+    "max_epochs": 50,
+    "patience": 7
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9075379652193921,
+      "val_macro_f1": 0.6525189016753661,
+      "seconds": 67.5
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8180164601699763,
+      "val_macro_f1": 0.6415882145554175,
+      "seconds": 66.4
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.791791367433339,
+      "val_macro_f1": 0.6559224271653435,
+      "seconds": 68.2
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.7753865830145626,
+      "val_macro_f1": 0.649173282380424,
+      "seconds": 67.3
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.7598583744620742,
+      "val_macro_f1": 0.6570864938433404,
+      "seconds": 67.5
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.7478520598769491,
+      "val_macro_f1": 0.652285052453793,
+      "seconds": 66.6
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.7369539537082622,
+      "val_macro_f1": 0.654043623352877,
+      "seconds": 65.8
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.7259194180815032,
+      "val_macro_f1": 0.6484705532772477,
+      "seconds": 67.2
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.7170575030421917,
+      "val_macro_f1": 0.6508862184940508,
+      "seconds": 67.0
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.7086547046653158,
+      "val_macro_f1": 0.6515891578548499,
+      "seconds": 67.4
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.7003205112999559,
+      "val_macro_f1": 0.6544748642939381,
+      "seconds": 66.8
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.694130122112061,
+      "val_macro_f1": 0.6545345782036146,
+      "seconds": 67.0
+    }
+  ]
+}
