@@ -1,0 +1,97 @@
+{
+  "dataset": "Coveo SIGIR eCom 2021",
+  "T_MAX": 25,
+  "LABEL_MAP": {
+    "Browser": 0,
+    "Researcher": 1,
+    "Intent": 2,
+    "Buyer": 3
+  },
+  "CLASS_ORDER": [
+    "Browser",
+    "Researcher",
+    "Intent",
+    "Buyer"
+  ],
+  "session_cat_cols": [
+    "start_hour",
+    "start_weekday"
+  ],
+  "key_events": [
+    "purchase",
+    "add",
+    "remove"
+  ],
+  "item_relations": [
+    "detail_of",
+    "add_of",
+    "remove_of",
+    "purchase_of"
+  ],
+  "split_boundaries": {
+    "p70": 1555033990555,
+    "p85": 1555124888143
+  },
+  "dt_stats": {
+    "dt_mean_sec": 28.209026398019486,
+    "dt_std_sec": 115.86310655501534,
+    "MAX_DT_sec": 928.3708799999943
+  },
+  "price_stats": {
+    "price_bucket_mean": 7.170144244501571,
+    "price_bucket_std": 2.1938759828859267
+  },
+  "vocab_sizes": {
+    "event": 7,
+    "page": 40424,
+    "item": 17294
+  },
+  "event_vocab": {
+    "add": 2,
+    "detail": 3,
+    "pageview": 4,
+    "purchase": 5,
+    "remove": 6,
+    "<PAD>": 0,
+    "<UNK>": 1
+  },
+  "cat_vocab_sizes": {
+    "start_hour": 24,
+    "start_weekday": 6
+  },
+  "sample": {
+    "total_sessions_in_file": 4934699,
+    "sampled_sessions": 300000,
+    "sample_cutoff_start_ms": 1555214397127,
+    "end_gap_days": 1.0
+  },
+  "counts": {
+    "sessions": 284845,
+    "sessions_by_split": {
+      "train": 199391,
+      "test": 42727,
+      "val": 42727
+    },
+    "sessions_by_class": {
+      "Browser": 231892,
+      "Researcher": 41860,
+      "Intent": 9178,
+      "Buyer": 1915
+    },
+    "prefixes": 1372857,
+    "prefixes_by_split": {
+      "train": 952079,
+      "val": 215092,
+      "test": 205686
+    },
+    "test_prefixes_by_class": {
+      "Browser": 103951,
+      "Researcher": 76101,
+      "Intent": 20592,
+      "Buyer": 5042
+    },
+    "undetermined_test_prefixes": 150965
+  },
+  "repro_all_pass": null,
+  "leakage": null
+}
