@@ -59,12 +59,24 @@ Stages:
 
 Each notebook folder has a README with more detail and rough runtimes.
 
+### Seed-aware significance (CPU only)
+
+The paired session bootstrap of stage 4 keeps each trained model fixed, so it measures
+test-set noise only. `analysis/seed_bootstrap.py` adds a two-level bootstrap (test sessions
+and seeds) and a seed-level Welch t-test, computed from the combined prediction file that
+stage 4/5 writes (`results*/test_predictions_all_models.parquet`):
+
+```bash
+python analysis/seed_bootstrap.py results_lr/test_predictions_all_models.parquet out_dir --ref HGNN_full
+```
+
 ### Local smoke tests (CPU, synthetic data)
 
 ```bash
 pip install -r requirements.txt
 python tests/smoke_test_exp4.py
 python tests/smoke_test_coveo.py
+python tests/smoke_test_seedstats.py
 ```
 
 ## Results
