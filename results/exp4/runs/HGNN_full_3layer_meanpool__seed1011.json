@@ -1,0 +1,90 @@
+{
+  "model": "HGNN_full_3layer_meanpool",
+  "seed": 1011,
+  "best_epoch": 5,
+  "best_val_macro_f1": 0.6654133124240834,
+  "test_macro_f1": 0.6659905694394828,
+  "epochs_run": 12,
+  "runtime_sec": 1152.9,
+  "n_params": 485252,
+  "train_config": {
+    "batch_size": 256,
+    "lr": 0.0001,
+    "max_epochs": 50,
+    "patience": 7
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9032260052338542,
+      "val_macro_f1": 0.661263053333278,
+      "seconds": 92.4
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8179111575150378,
+      "val_macro_f1": 0.6627464305868577,
+      "seconds": 92.3
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.7907746072223721,
+      "val_macro_f1": 0.6569865396641146,
+      "seconds": 92.0
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.7724796411434992,
+      "val_macro_f1": 0.6624652758721904,
+      "seconds": 95.8
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.758600095226968,
+      "val_macro_f1": 0.6654133124240834,
+      "seconds": 96.1
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.7440191490124881,
+      "val_macro_f1": 0.6624832844479078,
+      "seconds": 94.4
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.7327982657116469,
+      "val_macro_f1": 0.6583312166313583,
+      "seconds": 95.4
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.7223677340839421,
+      "val_macro_f1": 0.6600399474113186,
+      "seconds": 96.7
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.7116914263899302,
+      "val_macro_f1": 0.6590597138526275,
+      "seconds": 95.3
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.7033271032257024,
+      "val_macro_f1": 0.6494248274270727,
+      "seconds": 104.3
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.6952728320653816,
+      "val_macro_f1": 0.6523532287812314,
+      "seconds": 97.3
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.6867127167505189,
+      "val_macro_f1": 0.6499944053908016,
+      "seconds": 98.8
+    }
+  ]
+}

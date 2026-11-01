@@ -1,0 +1,90 @@
+{
+  "model": "HGNN_full_meanpool",
+  "seed": 1011,
+  "best_epoch": 5,
+  "best_val_macro_f1": 0.6703571417166827,
+  "test_macro_f1": 0.66737880617979,
+  "epochs_run": 12,
+  "runtime_sec": 797.2,
+  "n_params": 410948,
+  "train_config": {
+    "batch_size": 256,
+    "lr": 0.0001,
+    "max_epochs": 50,
+    "patience": 7
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.8994582058071297,
+      "val_macro_f1": 0.6643733120800053,
+      "seconds": 65.5
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8162477080371195,
+      "val_macro_f1": 0.6638179057399871,
+      "seconds": 65.8
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.7915505840528293,
+      "val_macro_f1": 0.6622180425817251,
+      "seconds": 67.5
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.773496871027718,
+      "val_macro_f1": 0.6678628565334022,
+      "seconds": 69.4
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.7600359055105914,
+      "val_macro_f1": 0.6703571417166827,
+      "seconds": 66.5
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.7477326804366072,
+      "val_macro_f1": 0.6622791677318637,
+      "seconds": 66.4
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.7367320384012561,
+      "val_macro_f1": 0.6562519506312757,
+      "seconds": 65.5
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.7261025758740575,
+      "val_macro_f1": 0.6598426834172664,
+      "seconds": 65.4
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.7164467518194554,
+      "val_macro_f1": 0.6615788182632533,
+      "seconds": 65.4
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.7077944304506586,
+      "val_macro_f1": 0.6513684954983031,
+      "seconds": 65.3
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.6995431969071036,
+      "val_macro_f1": 0.6558327688055295,
+      "seconds": 65.6
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.6921579635773254,
+      "val_macro_f1": 0.6595150397951315,
+      "seconds": 67.6
+    }
+  ]
+}

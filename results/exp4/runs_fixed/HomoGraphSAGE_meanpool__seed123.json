@@ -1,0 +1,66 @@
+{
+  "model": "HomoGraphSAGE_meanpool",
+  "seed": 123,
+  "best_epoch": 1,
+  "best_val_macro_f1": 0.658405833463379,
+  "test_macro_f1": 0.6637778947615173,
+  "epochs_run": 8,
+  "runtime_sec": 180.5,
+  "n_params": 278852,
+  "train_config": {
+    "batch_size": 256,
+    "lr": 0.001,
+    "max_epochs": 50,
+    "patience": 7
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.840845253848102,
+      "val_macro_f1": 0.658405833463379,
+      "seconds": 22.8
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.7552474893470332,
+      "val_macro_f1": 0.6361405883931572,
+      "seconds": 22.4
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.71757002629047,
+      "val_macro_f1": 0.649042210677944,
+      "seconds": 22.7
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.6909374669617572,
+      "val_macro_f1": 0.6302450928125296,
+      "seconds": 22.6
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.6708828057655041,
+      "val_macro_f1": 0.6370566913153305,
+      "seconds": 22.5
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.6555470831508313,
+      "val_macro_f1": 0.6410582989099243,
+      "seconds": 22.4
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.641310281829315,
+      "val_macro_f1": 0.6349503648398063,
+      "seconds": 22.3
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.6302149406897113,
+      "val_macro_f1": 0.6362715623390497,
+      "seconds": 22.4
+    }
+  ]
+}

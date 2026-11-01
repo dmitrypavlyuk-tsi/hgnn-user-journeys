@@ -1,0 +1,19 @@
+{
+  "model": "LightGBM",
+  "seed": 1011,
+  "params": {
+    "num_leaves": 31,
+    "max_depth": 8,
+    "learning_rate": 0.03202249831504804,
+    "n_estimators": 287,
+    "min_child_samples": 100,
+    "subsample": 0.84437545413874,
+    "colsample_bytree": 0.8911699995327604,
+    "reg_lambda": 0.006764507986188079
+  },
+  "best_val_macro_f1": 0.6443220599020586,
+  "test_macro_f1": 0.6484434299555804,
+  "n_features": 94,
+  "tuning_runtime_sec": 3679.2,
+  "runtime_sec": 108.9
+}
