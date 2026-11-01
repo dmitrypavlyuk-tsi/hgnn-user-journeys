@@ -110,6 +110,7 @@ print("Device:", DEVICE, torch.cuda.get_device_name(0) if DEVICE.type == "cuda" 
 print(f"RAM: {psutil.virtual_memory().total / 1e9:.1f} GB, vCPU: {os.cpu_count()}")
 print("Files in raw/:", os.listdir(RAW_DIR))
 
+LR_ROOT = os.path.join(DRIVE_DIR, "lr_selection")   # stage 5 output, also read by the fixed-rate stages
 LOG_PATH = os.path.join(DRIVE_DIR, "log.txt")
 def log(msg):
     line = f"{time.strftime('%Y-%m-%d %H:%M:%S')}  {msg}"
