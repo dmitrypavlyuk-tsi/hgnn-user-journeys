@@ -1,6 +1,6 @@
 # Experiment 5: Controlled comparison on a second dataset (Coveo SIGIR eCom 2021)
 
-Exp5 repeats the focused Exp4 comparison on a different retailer. It reuses the Exp4 library
+Exp5 repeats the Exp4 comparison on a different retailer. It reuses the Exp4 library
 (`src/exp4lib` in the repository root): the models, training settings, class weighting, early stopping, paired
 session bootstrap and evaluation are identical. The only new part is the data stage, `src/exp4lib/coveo.py`.
 
@@ -33,10 +33,13 @@ data implies accepting them. Upload the downloaded zip, unchanged, to Google Dri
 Splits use the same p70/p85 temporal rule on session end time. Items always belong to their own event, so
 the Exp3 join leakage cannot occur here.
 
-## Models (focused subset, 3 seeds)
+## Models (same set as Exp4, 5 seeds)
 
-Markov-3, LightGBM, SASRec+Time+SF+PageItem, GRU+Time+SF+PageItem, HGNN_full (last-event readout),
-HGNN_full_3layer_meanpool, HomoGraphSAGE_3layer_meanpool.
+Markov-3, LightGBM and the 13 Exp4 neural models: SASRec+Time, SASRec+Time+SF, SASRec+Time+SF+PageItem,
+GRU+Time+SF+PageItem, HGNN_full (2-layer, last-event), HGNN_no_page_item, HGNN_no_page_item_no_SF,
+HGNN_full_meanpool, HGNN_full_attnpool, HGNN_full_3layer_meanpool, HomoGraphSAGE+PageItemFeat,
+HomoGraphSAGE_meanpool, HomoGraphSAGE_3layer_meanpool. Not ported: HGNN_full_exp3join (the GA4
+timestamp-based item join has no Coveo counterpart; Coveo items belong to their own event).
 
 ## Rough runtimes (not yet measured on Coveo)
 

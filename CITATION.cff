@@ -9,7 +9,7 @@ authors:
   - family-names: "Pavlyuk"
     given-names: "Dmitry"
     affiliation: "Transport and Telecommunication Institute, Riga, Latvia"
-version: "2026-11-01.1"
+version: "2026-11-01.2"
 license: MIT
 date-released: "2026-10-30"
 keywords:

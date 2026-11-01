@@ -42,7 +42,7 @@ High-RAM is recommended but not required.
 from `lr_selection/final/` instead of retraining when stage 5 chose the default rate for that model."""))
 
 cells.append(md("## Configuration"))
-cells.append(code("""NOTEBOOK_VERSION = "2026-11-01.1"   # must match exp4lib.__version__ printed after the library cells
+cells.append(code("""NOTEBOOK_VERSION = "2026-11-01.2"   # must match exp4lib.__version__ printed after the library cells
 print("Exp4 notebook version:", NOTEBOOK_VERSION)
 
 # ---- edit these -------------------------------------------------------------

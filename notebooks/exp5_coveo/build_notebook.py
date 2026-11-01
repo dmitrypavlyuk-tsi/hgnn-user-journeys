@@ -2,8 +2,8 @@
 
     python build_notebook.py
 
-Exp5 repeats the focused Exp4 comparison on a second dataset (Coveo SIGIR eCom
-2021). The notebook is standalone: the shared library, including the Coveo data
+Exp5 repeats the Exp4 comparison on a second dataset (Coveo SIGIR eCom 2021),
+with the same model set except the GA4-specific leaky-join reference. The notebook is standalone: the shared library, including the Coveo data
 module, is embedded as %%writefile cells.
 """
 import os
@@ -22,7 +22,7 @@ cells = []
 
 cells.append(md("""# Experiment 5: Controlled Comparison on a Second Dataset (Coveo SIGIR eCom 2021)
 
-Exp5 repeats the focused Exp4 comparison on a different retailer, using the Coveo SIGIR eCom 2021 Data Challenge
+Exp5 repeats the Exp4 comparison on a different retailer, using the Coveo SIGIR eCom 2021 Data Challenge
 browsing data. The task, labels, prefix protocol, models, training settings, class weighting, early stopping and
 evaluation are the same as in Exp4. Only the data stage differs:
 
@@ -39,7 +39,7 @@ evaluation are the same as in Exp4. Only the data stage differs:
 Stages (each resumable; finished outputs on Google Drive are skipped):
 1. **Data**: unzip, sample with DuckDB, build the prefix tables.
 2. **Cheap baselines**: Markov-3 and LightGBM.
-3. **Neural models** (focused subset): SASRec+Time+SF+PageItem, GRU+Time+SF+PageItem, HGNN_full, HGNN_full_3layer_meanpool, HomoGraphSAGE_3layer_meanpool.
+3. **Neural models**: the 13 Exp4 neural models (main models, ablations, readout/depth variants and homogeneous controls). Only `HGNN_full_exp3join` is not ported: it reproduces the GA4 timestamp-based item join, and Coveo items belong to their own event by construction.
 4. **Evaluation**: as in Exp4, with bootstrap tables vs HGNN_full, the GRU and the homogeneous pooled graph.
 
 **Before you start:** register at Coveo and download the dataset zip (research use only, see its Terms and Conditions),
@@ -62,15 +62,24 @@ N_SESSIONS = 300_000                  # sessions sampled before the T_MAX filter
 END_GAP_DAYS = 1.0                    # sample ends this many days before the last session start
 SEEDS = [42, 123, 456, 789, 1011]    # 5 seeds in every stage (789/1011 top up the earlier 3-seed runs)
 
-NEURAL_MODELS = [
+NEURAL_MODELS = [                     # first the 5 models of the original focused run, then the rest of Exp4
     "HGNN_full",
     "HGNN_full_3layer_meanpool",
     "HomoGraphSAGE_3layer_meanpool",
     "GRU+Time+SF+PageItem",
     "SASRec+Time+SF+PageItem",
+    # added 2026-11-01 to match the GA4 model set (ablations, readout/depth variants, homogeneous controls)
+    "SASRec+Time",
+    "SASRec+Time+SF",
+    "HGNN_no_page_item",
+    "HGNN_no_page_item_no_SF",
+    "HGNN_full_meanpool",
+    "HGNN_full_attnpool",
+    "HomoGraphSAGE+PageItemFeat",
+    "HomoGraphSAGE_meanpool",
 ]
 LR_GRID = [1e-3, 3e-4, 1e-4]           # optional stage 5: learning rate chosen on validation (seed SEEDS[0])
-LR_MODELS = NEURAL_MODELS             # all 5 neural models
+LR_MODELS = NEURAL_MODELS             # all 13 neural models
 LR_SEEDS = SEEDS                       # seeds trained at the chosen learning rate
 LGBM_TRIALS = 30
 LGBM_TUNE_FRAC = 1.0                  # use 0.5 on a 2-vCPU T4 runtime
@@ -159,7 +168,7 @@ for p in sorted(os.listdir(os.path.join(RUN_DIR, "runs"))):
         r = json.load(open(os.path.join(RUN_DIR, "runs", p)))
         print(f"{p[:-5]:28s} val={r['best_val_macro_f1']:.4f} test={r['test_macro_f1']:.4f}")"""))
 
-cells.append(md("""## Stage 3: Neural models (focused subset)
+cells.append(md("""## Stage 3: Neural models
 
 Seed by seed, epoch checkpoints on Drive, resumable. Prints the estimated GPU time left after each run."""))
 cells.append(code("""if "D" not in globals():
