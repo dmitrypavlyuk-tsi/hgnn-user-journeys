@@ -197,6 +197,22 @@ def _copy_run(src_dir, dst_dir, tag):
         shutil.copy2(os.path.join(src_dir, sub, tag + ext), os.path.join(dst_dir, sub, tag + ext))
 
 
+def reuse_from_lr_final(base_run_dir, lr_root, model_name, seed, log=print):
+    """Fixed-rate stages: if stage 5 already trained this (model, seed) at the default
+    learning rate (its chosen rate equals the default), copy that run instead of retraining."""
+    choice_path = os.path.join(lr_root, "lr_choice.json")
+    final_dir = os.path.join(lr_root, "final")
+    if model_name not in MODEL_SPECS or not os.path.exists(choice_path):
+        return False
+    chosen = json.load(open(choice_path)).get(model_name, {}).get("chosen_lr")
+    default_lr = MODEL_SPECS[model_name]["train"]["lr"]
+    if chosen is None or abs(chosen - default_lr) > 1e-12 or not is_done(final_dir, model_name, seed):
+        return False
+    _copy_run(final_dir, base_run_dir, run_tag(model_name, seed))
+    log(f"[{run_tag(model_name, seed)}] reused from lr_selection/final (chosen lr = default {default_lr:g})")
+    return True
+
+
 def lr_selection(D, models, base_run_dir, lr_root, device, lrs=LR_GRID, select_seed=42,
                  seeds=(42, 123, 456), copy_prefixes=("Markov-", "LightGBM__"), log=print):
     """Choose each neural model's learning rate on validation Macro-F1 (one seed), then

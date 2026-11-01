@@ -34,17 +34,22 @@ Set the configuration cell, then run top to bottom. After a disconnect, run the 
 again and continue from the stage you were in.
 
 **Runtime:** set *Runtime → Change runtime type* to a GPU (L4 or A100 recommended, T4 works).
-High-RAM is recommended but not required."""))
+High-RAM is recommended but not required.
+
+**Top-up to 5 seeds (all stages).** `SEEDS` now has 5 seeds. Every stage skips finished runs, so only seeds
+789 and 1011 train. Recommended order: setup cells → stage 2 (2 extra LightGBM seeds, minutes) → stage 5
+(selected learning rate) → stages 3/3b/3c (fixed learning rate) → stage 4. Fixed-rate stages copy a run
+from `lr_selection/final/` instead of retraining when stage 5 chose the default rate for that model."""))
 
 cells.append(md("## Configuration"))
-cells.append(code("""NOTEBOOK_VERSION = "2026-10-30.7"   # must match exp4lib.__version__ printed after the library cells
+cells.append(code("""NOTEBOOK_VERSION = "2026-11-01.1"   # must match exp4lib.__version__ printed after the library cells
 print("Exp4 notebook version:", NOTEBOOK_VERSION)
 
 # ---- edit these -------------------------------------------------------------
 BQ_PROJECT = "your-gcp-project-id"   # any project you can run queries in (BigQuery sandbox is fine)
 DRIVE_DIR = "/content/drive/MyDrive/exp4_controlled"   # all artifacts, checkpoints and results
 
-SEEDS = [42, 123, 456]                # extend to [42, 123, 456, 789, 1011] for 5 seeds
+SEEDS = [42, 123, 456, 789, 1011]    # 5 seeds in every stage (789/1011 top up the earlier 3-seed runs)
 STRICT_REPRO = True                   # stop if the Exp3 counts are not reproduced exactly
 
 NEURAL_MODELS = [                     # stage 3, trained seed by seed in this order
@@ -62,17 +67,17 @@ STAGE_3B_MODELS = [                   # optional stage 3b: HGNN readout/depth va
     "HGNN_full_attnpool",
     "HGNN_full_3layer_meanpool",
 ]
-STAGE_3B_SEEDS = SEEDS[:3]
+STAGE_3B_SEEDS = SEEDS
 STAGE_3C_MODELS = [                   # optional stage 3c: homogeneous graph with pooled readout
     "HomoGraphSAGE_3layer_meanpool",
     "HomoGraphSAGE_meanpool",
 ]
-STAGE_3C_SEEDS = SEEDS[:3]
+STAGE_3C_SEEDS = SEEDS
 LR_GRID = [1e-3, 3e-4, 1e-4]           # optional stage 5: learning rate chosen on validation (seed SEEDS[0])
 LR_MODELS = NEURAL_MODELS + STAGE_3B_MODELS + STAGE_3C_MODELS   # all 13 neural models
 LR_SEEDS = SEEDS                       # seeds trained at the chosen learning rate
 RUN_LEAKY_REFERENCE = True            # also train HGNN_full on the original (leaky) Exp3 item join
-LEAKY_REFERENCE_SEEDS = SEEDS[:3]
+LEAKY_REFERENCE_SEEDS = SEEDS
 
 LGBM_TRIALS = 30                      # Optuna trials (Exp2 used 50)
 LGBM_TUNE_FRAC = 1.0                  # fraction of tuning-fit sessions; use 0.5 on a 2-vCPU T4 runtime
@@ -101,6 +106,7 @@ if DEVICE.type == "cuda":
 print("Device:", DEVICE, torch.cuda.get_device_name(0) if DEVICE.type == "cuda" else "")
 print(f"RAM: {psutil.virtual_memory().total / 1e9:.1f} GB, vCPU: {os.cpu_count()}")
 
+LR_ROOT = os.path.join(DRIVE_DIR, "lr_selection")   # stage 5 output, also read by the fixed-rate stages
 LOG_PATH = os.path.join(DRIVE_DIR, "log.txt")
 def log(msg):
     line = f"{time.strftime('%Y-%m-%d %H:%M:%S')}  {msg}"
@@ -198,7 +204,7 @@ def remaining_estimate():
 
 t_stage = time.time()
 for seed, name in jobs:
-    if train.is_done(RUN_DIR, name, seed):
+    if train.is_done(RUN_DIR, name, seed) or train.reuse_from_lr_final(RUN_DIR, LR_ROOT, name, seed, log=log):
         continue
     train.train_one(D, name, seed, RUN_DIR, DEVICE, log=log)
     torch.cuda.empty_cache()
@@ -222,7 +228,7 @@ cells.append(code("""if "D" not in globals():
 jobs_3b = [(s, m) for s in STAGE_3B_SEEDS for m in STAGE_3B_MODELS]
 t_stage = time.time()
 for seed, name in jobs_3b:
-    if train.is_done(RUN_DIR, name, seed):
+    if train.is_done(RUN_DIR, name, seed) or train.reuse_from_lr_final(RUN_DIR, LR_ROOT, name, seed, log=log):
         continue
     train.train_one(D, name, seed, RUN_DIR, DEVICE, log=log)
     torch.cuda.empty_cache()
@@ -244,7 +250,7 @@ cells.append(code("""if "D" not in globals():
 jobs_3c = [(s, m) for s in STAGE_3C_SEEDS for m in STAGE_3C_MODELS]
 t_stage = time.time()
 for seed, name in jobs_3c:
-    if train.is_done(RUN_DIR, name, seed):
+    if train.is_done(RUN_DIR, name, seed) or train.reuse_from_lr_final(RUN_DIR, LR_ROOT, name, seed, log=log):
         continue
     train.train_one(D, name, seed, RUN_DIR, DEVICE, log=log)
     torch.cuda.empty_cache()
@@ -281,7 +287,6 @@ comes from stage 3, so only the lower rates are trained. Results are written sep
 (`lr_selection/final/`, `results_lr/`); the stage 4 results stay untouched. Resumable like every other stage."""))
 cells.append(code("""if "D" not in globals():
     D = data.Exp4Data(PREP_DIR)
-LR_ROOT = os.path.join(DRIVE_DIR, "lr_selection")
 RESULTS_LR_DIR = os.path.join(DRIVE_DIR, "results_lr")
 t_stage = time.time()
 choice = train.lr_selection(D, LR_MODELS, RUN_DIR, LR_ROOT, DEVICE, lrs=LR_GRID,

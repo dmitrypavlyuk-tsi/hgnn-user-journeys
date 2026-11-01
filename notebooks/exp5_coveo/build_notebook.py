@@ -44,7 +44,13 @@ Stages (each resumable; finished outputs on Google Drive are skipped):
 
 **Before you start:** register at Coveo and download the dataset zip (research use only, see its Terms and Conditions),
 then upload the zip unchanged to `MyDrive/exp5_coveo/raw/` on Google Drive.
-**Runtime:** a GPU (L4/A100 recommended, T4 works). High-RAM recommended for stage 1."""))
+**Runtime:** a GPU (L4/A100 recommended, T4 works). High-RAM recommended for stage 1.
+
+**Top-up to 5 seeds (all stages).** `SEEDS` now has 5 seeds. Every stage skips finished runs, so only seeds
+789 and 1011 train. Stage 5 already has 5 seeds. Recommended order: setup cells → stage 2 (2 extra LightGBM
+seeds, minutes) → stage 5 (no training; copies the new LightGBM seeds and re-evaluates) → stage 3 (fixed
+learning rate) → stage 4. Stage 3 copies a run from `lr_selection/final/` instead of retraining when stage 5
+chose the default rate for that model (here `HGNN_full`)."""))
 
 cells.append(md("## Configuration"))
 cells.append(code(f'''NOTEBOOK_VERSION = "{VERSION}"   # must match exp4lib.__version__ printed after the library cells
@@ -54,7 +60,7 @@ print("Exp5 notebook version:", NOTEBOOK_VERSION)
 DRIVE_DIR = "/content/drive/MyDrive/exp5_coveo"   # put the Coveo zip into DRIVE_DIR/raw/
 N_SESSIONS = 300_000                  # sessions sampled before the T_MAX filter
 END_GAP_DAYS = 1.0                    # sample ends this many days before the last session start
-SEEDS = [42, 123, 456]
+SEEDS = [42, 123, 456, 789, 1011]    # 5 seeds in every stage (789/1011 top up the earlier 3-seed runs)
 
 NEURAL_MODELS = [
     "HGNN_full",
@@ -65,7 +71,7 @@ NEURAL_MODELS = [
 ]
 LR_GRID = [1e-3, 3e-4, 1e-4]           # optional stage 5: learning rate chosen on validation (seed SEEDS[0])
 LR_MODELS = NEURAL_MODELS             # all 5 neural models
-LR_SEEDS = [42, 123, 456, 789, 1011]   # 5 seeds at the chosen learning rate (789/1011 are new runs)
+LR_SEEDS = SEEDS                       # seeds trained at the chosen learning rate
 LGBM_TRIALS = 30
 LGBM_TUNE_FRAC = 1.0                  # use 0.5 on a 2-vCPU T4 runtime
 LGBM_TUNE_TIMEOUT_SEC = 3 * 3600
@@ -161,7 +167,7 @@ cells.append(code("""if "D" not in globals():
 jobs = [(s, m) for s in SEEDS for m in NEURAL_MODELS]
 t_stage = time.time()
 for seed, name in jobs:
-    if train.is_done(RUN_DIR, name, seed):
+    if train.is_done(RUN_DIR, name, seed) or train.reuse_from_lr_final(RUN_DIR, LR_ROOT, name, seed, log=log):
         continue
     train.train_one(D, name, seed, RUN_DIR, DEVICE, log=log)
     torch.cuda.empty_cache()
@@ -195,7 +201,6 @@ comes from stage 3, so only the lower rates are trained. Results are written sep
 (`lr_selection/final/`, `results_lr/`); the stage 4 results stay untouched. Resumable like every other stage."""))
 cells.append(code("""if "D" not in globals():
     D = data.Exp4Data(PREP_DIR)
-LR_ROOT = os.path.join(DRIVE_DIR, "lr_selection")
 RESULTS_LR_DIR = os.path.join(DRIVE_DIR, "results_lr")
 t_stage = time.time()
 choice = train.lr_selection(D, LR_MODELS, RUN_DIR, LR_ROOT, DEVICE, lrs=LR_GRID,
