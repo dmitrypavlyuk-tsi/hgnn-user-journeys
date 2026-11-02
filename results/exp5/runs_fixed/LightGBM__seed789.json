@@ -1,6 +1,6 @@
 {
   "model": "LightGBM",
-  "seed": 42,
+  "seed": 789,
   "params": {
     "num_leaves": 63,
     "max_depth": 8,
@@ -11,9 +11,9 @@
     "colsample_bytree": 0.7255077111613986,
     "reg_lambda": 0.2394926919927523
   },
-  "best_val_macro_f1": 0.5733773946569187,
-  "test_macro_f1": 0.5801256373559446,
+  "best_val_macro_f1": 0.5761369882486345,
+  "test_macro_f1": 0.5833994074842921,
   "n_features": 38,
   "tuning_runtime_sec": 2410.3,
-  "runtime_sec": 163.3
+  "runtime_sec": 168.2
 }
