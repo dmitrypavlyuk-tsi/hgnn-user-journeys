@@ -21,7 +21,7 @@ leakage and fixes it.
 3. In the **Configuration** cell, set:
    - `BQ_PROJECT`: any Google Cloud project you can run queries in. A free BigQuery sandbox project is fine. The notebook only reads the public `ga4_obfuscated_sample_ecommerce` dataset.
    - `DRIVE_DIR`: where artifacts are stored. The default is `MyDrive/exp4_controlled`.
-   - `SEEDS`: three seeds by default. Extend the list to `[42, 123, 456, 789, 1011]` to get five.
+   - `SEEDS`: five seeds, `[42, 123, 456, 789, 1011]`, in every stage. Finished runs are skipped, so a shorter list can be extended later.
 4. Run all cells. Colab asks for Google Drive access and then for Google Cloud access (stage 1 only).
 5. If the runtime disconnects: reconnect and run the cells from **Configuration** down to the library import again, then re-run the stage you were in. Finished outputs are skipped. An interrupted neural run resumes from its last completed epoch.
 

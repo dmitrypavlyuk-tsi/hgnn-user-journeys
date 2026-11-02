@@ -47,7 +47,8 @@ timestamp-based item join has no Coveo counterpart; Coveo items belong to their 
 |---|---|
 | 1. Data (unzip, DuckDB pass over 36M rows, tables) | 15–30 min |
 | 2. Markov + LightGBM (30 Optuna trials) | 1–3 h on 8–12 vCPU; much slower on a 2-vCPU T4 runtime (set `LGBM_TUNE_FRAC=0.5`) |
-| 3. Five neural models × 3 seeds | about 2–3 h on an L4 |
+| 3. 13 neural models × 5 seeds (fixed learning rate) | about 5–7 h on an L4 |
+| 5. Learning-rate selection + 5 seeds at the chosen rate | about 6–8 h on an L4 |
 | 4. Evaluation | under 5 min |
 
 ## Outputs (under `MyDrive/exp5_coveo/`)

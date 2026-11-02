@@ -11,7 +11,10 @@ thesis experiments (Exp0–Exp3, https://github.com/dgizdevans/master) with:
 
 - **Exp4**: a controlled re-run on the GA4 dataset with 16 model configurations, readout/depth ablations and a
   leakage audit.
-- **Exp5**: the same focused comparison on a second retailer (Coveo SIGIR eCom 2021).
+- **Exp5**: the same comparison on a second retailer (Coveo SIGIR eCom 2021), with the same 13 neural models
+  (only the GA4-specific leaky-join reference is not ported).
+
+Both experiments use five seeds per model, a learning rate selected on validation (stage 5) and a fixed-rate robustness run.
 
 ## Repository layout
 
@@ -53,8 +56,9 @@ Stages:
 |---|---|---|
 | 1 Data | BigQuery extraction, exact reproduction of the Exp3 counts, item-join leakage audit | Unzip, DuckDB sampling (≈300k sessions), prefix tables |
 | 2 Cheap baselines | Markov-3, LightGBM (Optuna) | same |
-| 3 Neural models | 8 models + leaky-join reference | 5 models (focused subset) |
-| 3b / 3c (Exp4 only) | HGNN readout/depth variants; homogeneous graph with pooled readout | – |
+| 3 Neural models | 8 models + leaky-join reference | 13 models (stage 3 includes the 3b/3c variants) |
+| 3b / 3c | HGNN readout/depth variants; homogeneous graph with pooled readout | included in stage 3 |
+| 5 Learning-rate selection | lr from {1e-3, 3e-4, 1e-4} on validation (seed 42), then 5 seeds at the chosen rate | same |
 | 4 Evaluation | Macro-F1 ± s.d., per-class F1, paired session bootstrap, prefix-length bins, undetermined prefixes | same |
 
 Each notebook folder has a README with more detail and rough runtimes.
