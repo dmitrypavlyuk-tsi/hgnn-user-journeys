@@ -1,0 +1,48 @@
+{
+  "model": "SASRec+Time",
+  "seed": 42,
+  "best_epoch": 2,
+  "best_val_macro_f1": 0.6265342248457481,
+  "test_macro_f1": 0.6293378729534476,
+  "epochs_run": 5,
+  "runtime_sec": 123.8,
+  "n_params": 102532,
+  "train_config": {
+    "batch_size": 512,
+    "lr": 0.001,
+    "max_epochs": 30,
+    "patience": 3
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9660581656225123,
+      "val_macro_f1": 0.6091754868406767,
+      "seconds": 24.7
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.9437192786955545,
+      "val_macro_f1": 0.6265342248457481,
+      "seconds": 24.6
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.9375083077229336,
+      "val_macro_f1": 0.6135008489886395,
+      "seconds": 24.1
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.9343664191887538,
+      "val_macro_f1": 0.5968448792856087,
+      "seconds": 24.6
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.9319297112903308,
+      "val_macro_f1": 0.6131293864456604,
+      "seconds": 24.4
+    }
+  ]
+}

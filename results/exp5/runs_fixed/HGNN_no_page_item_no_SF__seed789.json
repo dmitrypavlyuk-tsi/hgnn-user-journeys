@@ -1,0 +1,114 @@
+{
+  "model": "HGNN_no_page_item_no_SF",
+  "seed": 789,
+  "best_epoch": 9,
+  "best_val_macro_f1": 0.5149344793256845,
+  "test_macro_f1": 0.523575584147371,
+  "epochs_run": 16,
+  "runtime_sec": 257.3,
+  "n_params": 21572,
+  "train_config": {
+    "batch_size": 256,
+    "lr": 0.001,
+    "max_epochs": 50,
+    "patience": 7
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.1329814214290395,
+      "val_macro_f1": 0.5007556746873983,
+      "seconds": 16.2
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.1014729382777109,
+      "val_macro_f1": 0.5121654621331905,
+      "seconds": 15.9
+    },
+    {
+      "epoch": 3,
+      "train_loss": 1.0964647423017915,
+      "val_macro_f1": 0.4820215003233044,
+      "seconds": 16.2
+    },
+    {
+      "epoch": 4,
+      "train_loss": 1.0930349437145905,
+      "val_macro_f1": 0.5028288570364388,
+      "seconds": 16.2
+    },
+    {
+      "epoch": 5,
+      "train_loss": 1.0909906915744039,
+      "val_macro_f1": 0.5083976012464838,
+      "seconds": 16.1
+    },
+    {
+      "epoch": 6,
+      "train_loss": 1.0908160616711062,
+      "val_macro_f1": 0.5125580638667075,
+      "seconds": 15.9
+    },
+    {
+      "epoch": 7,
+      "train_loss": 1.0906225817985071,
+      "val_macro_f1": 0.5086047883158995,
+      "seconds": 16.1
+    },
+    {
+      "epoch": 8,
+      "train_loss": 1.0891137646362592,
+      "val_macro_f1": 0.5072711413395095,
+      "seconds": 16.1
+    },
+    {
+      "epoch": 9,
+      "train_loss": 1.0893904861479708,
+      "val_macro_f1": 0.5149344793256845,
+      "seconds": 16.1
+    },
+    {
+      "epoch": 10,
+      "train_loss": 1.0879235892813708,
+      "val_macro_f1": 0.507306960798011,
+      "seconds": 15.9
+    },
+    {
+      "epoch": 11,
+      "train_loss": 1.0871847619724186,
+      "val_macro_f1": 0.4939140597169023,
+      "seconds": 16.1
+    },
+    {
+      "epoch": 12,
+      "train_loss": 1.0882267830244217,
+      "val_macro_f1": 0.5034264912654685,
+      "seconds": 15.9
+    },
+    {
+      "epoch": 13,
+      "train_loss": 1.0895832696333962,
+      "val_macro_f1": 0.5129336024275248,
+      "seconds": 15.9
+    },
+    {
+      "epoch": 14,
+      "train_loss": 1.087394493034616,
+      "val_macro_f1": 0.5043788811912405,
+      "seconds": 16.2
+    },
+    {
+      "epoch": 15,
+      "train_loss": 1.086840559982467,
+      "val_macro_f1": 0.4727758159878757,
+      "seconds": 16.0
+    },
+    {
+      "epoch": 16,
+      "train_loss": 1.087704814896784,
+      "val_macro_f1": 0.48412289787071855,
+      "seconds": 16.2
+    }
+  ]
+}

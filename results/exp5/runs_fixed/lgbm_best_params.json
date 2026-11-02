@@ -1,0 +1,16 @@
+{
+  "params": {
+    "num_leaves": 63,
+    "max_depth": 8,
+    "learning_rate": 0.04739971491458334,
+    "n_estimators": 428,
+    "min_child_samples": 20,
+    "subsample": 0.7602194393145223,
+    "colsample_bytree": 0.7255077111613986,
+    "reg_lambda": 0.2394926919927523
+  },
+  "tune_macro_f1": 0.6205798610342367,
+  "n_trials_completed": 30,
+  "tune_frac": 1.0,
+  "runtime_sec": 2410.3
+}

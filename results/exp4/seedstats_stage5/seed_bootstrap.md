@@ -114,3 +114,79 @@ Two-level bootstrap: 1000 resamples of 49,093 test sessions and, per model, of i
 | LightGBM | -0.0137 | [-0.0211, -0.0070] | 0.000 | 0.005 |
 | HGNN_no_page_item_no_SF | -0.0900 | [-0.0995, -0.0820] | 0.000 | 0.000 |
 | Markov-3 | -0.1090 | [-0.1178, -0.1005] | 0.000 | – |
+
+## Δ vs HGNN_full_meanpool
+
+| Model | Δ | 95% CI (two-level) | p (two-level) | Welch p (seeds) |
+|---|---|---|---|---|
+| HGNN_full_3layer_meanpool | +0.0030 | [-0.0023, +0.0077] | 0.264 | 0.264 |
+| SASRec+Time+SF+PageItem | -0.0001 | [-0.0049, +0.0046] | 0.966 | 0.945 |
+| HGNN_full_attnpool | -0.0005 | [-0.0046, +0.0037] | 0.840 | 0.742 |
+| SASRec+Time+SF | -0.0005 | [-0.0068, +0.0049] | 0.902 | 0.720 |
+| GRU+Time+SF+PageItem | -0.0011 | [-0.0067, +0.0041] | 0.678 | 0.574 |
+| HomoGraphSAGE_meanpool | -0.0024 | [-0.0069, +0.0022] | 0.258 | 0.255 |
+| HomoGraphSAGE_3layer_meanpool | -0.0027 | [-0.0085, +0.0027] | 0.364 | 0.373 |
+| HomoGraphSAGE+PageItemFeat | -0.0122 | [-0.0180, -0.0066] | 0.000 | 0.000 |
+| SASRec+Time | -0.0130 | [-0.0202, -0.0066] | 0.000 | 0.000 |
+| HGNN_full | -0.0150 | [-0.0211, -0.0095] | 0.000 | 0.000 |
+| HGNN_no_page_item | -0.0153 | [-0.0222, -0.0095] | 0.000 | 0.000 |
+| LightGBM | -0.0164 | [-0.0230, -0.0103] | 0.000 | 0.000 |
+| HGNN_no_page_item_no_SF | -0.0927 | [-0.1010, -0.0847] | 0.000 | 0.000 |
+| Markov-3 | -0.1117 | [-0.1199, -0.1037] | 0.000 | – |
+
+## Δ vs HGNN_no_page_item
+
+| Model | Δ | 95% CI (two-level) | p (two-level) | Welch p (seeds) |
+|---|---|---|---|---|
+| HGNN_full_3layer_meanpool | +0.0183 | [+0.0110, +0.0256] | 0.000 | 0.000 |
+| HGNN_full_meanpool | +0.0153 | [+0.0095, +0.0222] | 0.000 | 0.000 |
+| SASRec+Time+SF+PageItem | +0.0152 | [+0.0085, +0.0220] | 0.000 | 0.000 |
+| HGNN_full_attnpool | +0.0148 | [+0.0089, +0.0208] | 0.000 | 0.000 |
+| SASRec+Time+SF | +0.0148 | [+0.0101, +0.0199] | 0.000 | 0.000 |
+| GRU+Time+SF+PageItem | +0.0142 | [+0.0072, +0.0216] | 0.000 | 0.000 |
+| HomoGraphSAGE_meanpool | +0.0129 | [+0.0063, +0.0196] | 0.000 | 0.000 |
+| HomoGraphSAGE_3layer_meanpool | +0.0127 | [+0.0060, +0.0199] | 0.000 | 0.003 |
+| HomoGraphSAGE+PageItemFeat | +0.0031 | [-0.0017, +0.0079] | 0.220 | 0.217 |
+| SASRec+Time | +0.0023 | [-0.0038, +0.0083] | 0.422 | 0.334 |
+| HGNN_full | +0.0003 | [-0.0047, +0.0059] | 0.906 | 0.902 |
+| LightGBM | -0.0011 | [-0.0069, +0.0047] | 0.722 | 0.545 |
+| HGNN_no_page_item_no_SF | -0.0774 | [-0.0844, -0.0707] | 0.000 | 0.000 |
+| Markov-3 | -0.0964 | [-0.1041, -0.0888] | 0.000 | – |
+
+## Δ vs SASRec+Time+SF
+
+| Model | Δ | 95% CI (two-level) | p (two-level) | Welch p (seeds) |
+|---|---|---|---|---|
+| HGNN_full_3layer_meanpool | +0.0035 | [-0.0041, +0.0106] | 0.296 | 0.162 |
+| HGNN_full_meanpool | +0.0005 | [-0.0049, +0.0068] | 0.902 | 0.720 |
+| SASRec+Time+SF+PageItem | +0.0004 | [-0.0055, +0.0068] | 0.920 | 0.792 |
+| HGNN_full_attnpool | +0.0000 | [-0.0057, +0.0058] | 0.994 | 0.985 |
+| GRU+Time+SF+PageItem | -0.0006 | [-0.0074, +0.0064] | 0.848 | 0.704 |
+| HomoGraphSAGE_meanpool | -0.0019 | [-0.0080, +0.0042] | 0.548 | 0.272 |
+| HomoGraphSAGE_3layer_meanpool | -0.0021 | [-0.0080, +0.0049] | 0.516 | 0.436 |
+| HomoGraphSAGE+PageItemFeat | -0.0117 | [-0.0163, -0.0069] | 0.000 | 0.001 |
+| SASRec+Time | -0.0124 | [-0.0163, -0.0089] | 0.000 | 0.001 |
+| HGNN_full | -0.0145 | [-0.0198, -0.0096] | 0.000 | 0.001 |
+| HGNN_no_page_item | -0.0148 | [-0.0199, -0.0101] | 0.000 | 0.000 |
+| LightGBM | -0.0159 | [-0.0213, -0.0106] | 0.000 | 0.000 |
+| HGNN_no_page_item_no_SF | -0.0922 | [-0.0985, -0.0862] | 0.000 | 0.000 |
+| Markov-3 | -0.1111 | [-0.1180, -0.1038] | 0.000 | – |
+
+## Δ vs SASRec+Time
+
+| Model | Δ | 95% CI (two-level) | p (two-level) | Welch p (seeds) |
+|---|---|---|---|---|
+| HGNN_full_3layer_meanpool | +0.0159 | [+0.0081, +0.0236] | 0.000 | 0.000 |
+| HGNN_full_meanpool | +0.0130 | [+0.0066, +0.0202] | 0.000 | 0.000 |
+| SASRec+Time+SF+PageItem | +0.0128 | [+0.0060, +0.0201] | 0.002 | 0.000 |
+| HGNN_full_attnpool | +0.0125 | [+0.0059, +0.0196] | 0.000 | 0.000 |
+| SASRec+Time+SF | +0.0124 | [+0.0089, +0.0163] | 0.000 | 0.001 |
+| GRU+Time+SF+PageItem | +0.0119 | [+0.0044, +0.0197] | 0.002 | 0.000 |
+| HomoGraphSAGE_meanpool | +0.0106 | [+0.0039, +0.0176] | 0.004 | 0.001 |
+| HomoGraphSAGE_3layer_meanpool | +0.0103 | [+0.0034, +0.0183] | 0.004 | 0.009 |
+| HomoGraphSAGE+PageItemFeat | +0.0008 | [-0.0050, +0.0067] | 0.824 | 0.744 |
+| HGNN_full | -0.0020 | [-0.0083, +0.0040] | 0.508 | 0.436 |
+| HGNN_no_page_item | -0.0023 | [-0.0083, +0.0038] | 0.422 | 0.334 |
+| LightGBM | -0.0034 | [-0.0103, +0.0030] | 0.292 | 0.094 |
+| HGNN_no_page_item_no_SF | -0.0797 | [-0.0865, -0.0735] | 0.000 | 0.000 |
+| Markov-3 | -0.0987 | [-0.1060, -0.0913] | 0.000 | – |
