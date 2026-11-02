@@ -1,0 +1,48 @@
+{
+  "model": "GRU+Time+SF+PageItem",
+  "seed": 42,
+  "best_epoch": 2,
+  "best_val_macro_f1": 0.561654946664159,
+  "test_macro_f1": 0.4701706880702889,
+  "epochs_run": 5,
+  "runtime_sec": 62.0,
+  "n_params": 3734532,
+  "train_config": {
+    "batch_size": 512,
+    "lr": 0.0001,
+    "max_epochs": 30,
+    "patience": 3
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.0099830780896233,
+      "val_macro_f1": 0.5603589116032464,
+      "seconds": 12.3
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8682608465882512,
+      "val_macro_f1": 0.561654946664159,
+      "seconds": 12.4
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.8278259166072864,
+      "val_macro_f1": 0.5434068474145407,
+      "seconds": 12.3
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.7935884851589787,
+      "val_macro_f1": 0.5478091459781583,
+      "seconds": 12.2
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.7614042284912439,
+      "val_macro_f1": 0.5190733544788819,
+      "seconds": 12.5
+    }
+  ]
+}
